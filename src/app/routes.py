@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify, Response, request
+from flask import Blueprint, jsonify, Response
 
-from app.database import db
+from app.database.database import db
 
 routes_blueprint = Blueprint('routes_blueprint', __name__)
 
