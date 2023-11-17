@@ -34,7 +34,7 @@ def add_form() -> Response:
 @routes_blueprint.route('/get_form', methods=['POST'])
 def get_form() -> Response:
     query_string = request.query_string.decode('utf-8')
-    filter_query = {'response': 'You did not enter any query parameters!'}
+    filter_query = None
 
     if query_string:
         decoded_query_string = unquote(query_string)
@@ -54,5 +54,7 @@ def get_form() -> Response:
         for item in result:
             item['_id'] = str(item['_id'])
         return jsonify(result)
+    elif not filter_query:
+        return jsonify({'response': 'There is no forms in database! Use /add_form to add one.'})
     else:
         return jsonify(filter_query)
