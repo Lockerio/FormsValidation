@@ -7,20 +7,32 @@ from app.utils.type_specifier import TypeSpecifier
 
 
 routes_blueprint = Blueprint('routes_blueprint', __name__)
+collection = db["forms"]
 
 
-@routes_blueprint.route('/')
-def get_all_forms() -> Response:
-    collections = db.list_collection_names()
-    if collections:
-        return jsonify({'collections': collections})
-    else:
-        return jsonify({'response': 'no such collections'})
+@routes_blueprint.route('/add_form', methods=['POST'])
+def add_form() -> Response:
+    try:
+        json_data = request.get_json()
+
+        if 'name' in json_data.keys():
+            for key, value in json_data.items():
+                if key != 'name':
+                    if not TypeSpecifier.is_input_type_correct(value):
+                        return jsonify({'response': f'Type of field {key} is not correct! '
+                                                    'Yoy can use only "date", "phone_number", "email" or "text".'})
+        else:
+            return jsonify({'response': 'The form must contain a name field!'})
+
+        collection.insert_one(json_data)
+        return jsonify({'response': 'Form has been added!'})
+
+    except Exception as e:
+        return jsonify(str(e))
 
 
 @routes_blueprint.route('/get_form', methods=['POST'])
 def get_form() -> Response:
-    collection = db["forms"]
     query_string = request.query_string.decode('utf-8')
     filter_query = {'response': 'You did not enter any query parameters!'}
 

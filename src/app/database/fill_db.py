@@ -12,8 +12,8 @@ data_to_insert = [
     {"name": "feedback form",
      "email": "email",
      "full_name": "text",
-     "feedback subject": "text",
-     "feedback message": "text"},
+     "feedback_subject": "text",
+     "feedback_message": "text"},
 
     {"name": "contact form",
      "email": "email",

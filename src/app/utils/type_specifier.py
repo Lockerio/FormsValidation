@@ -12,3 +12,9 @@ class TypeSpecifier:
             return "email"
         else:
             return "text"
+
+    @staticmethod
+    def is_input_type_correct(line: str) -> bool:
+        if line in ["date", "phone_number", "email", "text"]:
+            return True
+        return False
