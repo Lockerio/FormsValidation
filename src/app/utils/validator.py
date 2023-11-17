@@ -20,10 +20,8 @@ class Validator:
 
     @staticmethod
     def is_input_string_phone_number(input_string: str) -> bool:
-        print(input_string)
         phone_pattern = re.compile(r'^\+7 \d{3} \d{3} \d{2} \d{2}$')
         match = re.match(phone_pattern, input_string)
-        print(bool(match))
         return bool(match)
 
     @staticmethod
